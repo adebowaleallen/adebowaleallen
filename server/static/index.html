@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Response System - Teacher Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>Student Response System</h1>
+            <div class="connection-status">
+                <span id="connectionStatus" class="status-indicator">⚫</span>
+                <span id="connectionText">Connecting...</span>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Create Question Section -->
+            <section class="card">
+                <h2>Create Question</h2>
+                <form id="questionForm">
+                    <div class="form-group">
+                        <label for="questionText">Question:</label>
+                        <textarea
+                            id="questionText"
+                            rows="3"
+                            placeholder="Enter your question here..."
+                            required
+                        ></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="questionType">Question Type:</label>
+                        <select id="questionType">
+                            <option value="yes_no">Yes/No</option>
+                            <option value="multiple_choice">Multiple Choice (A, B, C, D)</option>
+                            <option value="true_false">True/False</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="optionsGroup" style="display: none;">
+                        <label>Options:</label>
+                        <input type="text" id="optionA" placeholder="Option A">
+                        <input type="text" id="optionB" placeholder="Option B">
+                        <input type="text" id="optionC" placeholder="Option C">
+                        <input type="text" id="optionD" placeholder="Option D">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="correctAnswer">Correct Answer (optional):</label>
+                        <input type="text" id="correctAnswer" placeholder="e.g., A or YES">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Create Question</button>
+                </form>
+            </section>
+
+            <!-- Active Question Section -->
+            <section class="card">
+                <div class="section-header">
+                    <h2>Active Question</h2>
+                    <button id="closeQuestionBtn" class="btn btn-danger" style="display: none;">
+                        Close Question
+                    </button>
+                </div>
+
+                <div id="activeQuestionDisplay" class="active-question">
+                    <p class="no-question">No active question. Create one above!</p>
+                </div>
+
+                <!-- Real-time Response Counter -->
+                <div id="responseStats" class="response-stats" style="display: none;">
+                    <h3>Live Responses (<span id="totalResponses">0</span>)</h3>
+                    <div id="responseChart" class="response-chart"></div>
+                </div>
+            </section>
+
+            <!-- Live Responses Feed -->
+            <section class="card">
+                <h2>Live Response Feed</h2>
+                <div id="responseFeed" class="response-feed">
+                    <p class="no-responses">Waiting for student responses...</p>
+                </div>
+            </section>
+
+            <!-- Student List -->
+            <section class="card">
+                <h2>Connected Students</h2>
+                <div id="studentList" class="student-list">
+                    <p class="no-students">No students connected yet.</p>
+                </div>
+            </section>
+
+            <!-- Question History -->
+            <section class="card">
+                <h2>Question History</h2>
+                <div id="questionHistory" class="question-history">
+                    <p class="no-history">No questions yet.</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
