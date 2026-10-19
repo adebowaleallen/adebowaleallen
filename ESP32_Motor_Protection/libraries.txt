@@ -1,0 +1,172 @@
+# Required Arduino Libraries for ESP32 Motor Protection System v3.2
+
+## Installation via Arduino Library Manager
+
+Open Arduino IDE → Sketch → Include Library → Manage Libraries
+Search and install each library below:
+
+## Core Libraries (Install these first)
+
+1. **ESP32 Board Support**
+   - Name: esp32 by Espressif Systems
+   - Version: 2.0.11 or later
+   - Installation: File → Preferences → Additional Board Manager URLs
+   - URL: https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
+   - Then: Tools → Board → Board Manager → Search "ESP32" → Install
+
+## Sensor Libraries
+
+2. **Adafruit MPU6050**
+   - Library Name: Adafruit MPU6050
+   - Version: 2.2.4 or later
+   - Author: Adafruit
+   - Purpose: MPU6050 accelerometer/gyroscope driver
+   - Dependencies: Automatically installs Adafruit BusIO, Adafruit Unified Sensor
+
+3. **Adafruit Unified Sensor**
+   - Library Name: Adafruit Unified Sensor
+   - Version: 1.1.9 or later
+   - Author: Adafruit
+   - Purpose: Sensor abstraction layer
+   - Note: Usually auto-installed with Adafruit MPU6050
+
+4. **DallasTemperature**
+   - Library Name: DallasTemperature
+   - Version: 3.9.0 or later
+   - Author: Miles Burton
+   - Purpose: DS18B20 temperature sensor interface
+   - Dependencies: OneWire library
+
+5. **OneWire**
+   - Library Name: OneWire
+   - Version: 2.3.7 or later
+   - Author: Paul Stoffregen
+   - Purpose: 1-Wire protocol for DS18B20
+   - Note: Required by DallasTemperature
+
+## Optional Libraries
+
+6. **arduinoFFT** (Currently unused, but included in sketch)
+   - Library Name: arduinoFFT
+   - Version: 1.6.1 or later
+   - Author: Enrique Condes (kosme)
+   - Purpose: Fast Fourier Transform calculations
+   - Note: For future FFT vibration analysis features
+
+## Built-in ESP32 Libraries (No installation needed)
+
+7. **WiFi**
+   - Built into ESP32 core
+   - Purpose: WiFi connectivity and Access Point mode
+
+8. **WebServer**
+   - Built into ESP32 core
+   - Purpose: HTTP web server for dashboard
+
+9. **Wire**
+   - Built into ESP32 core
+   - Purpose: I2C communication (MPU6050)
+
+10. **Preferences**
+    - Built into ESP32 core
+    - Purpose: Non-volatile storage (NVS)
+
+11. **esp_task_wdt**
+    - Built into ESP32 core
+    - Purpose: Watchdog timer for system stability
+
+## PlatformIO Configuration (Alternative)
+
+If using PlatformIO instead of Arduino IDE, add to platformio.ini:
+
+```ini
+[env:esp32dev]
+platform = espressif32
+board = esp32dev
+framework = arduino
+monitor_speed = 115200
+
+lib_deps =
+    adafruit/Adafruit MPU6050@^2.2.4
+    adafruit/Adafruit Unified Sensor@^1.1.9
+    milesburton/DallasTemperature@^3.9.0
+    paulstoffregen/OneWire@^2.3.7
+    kosme/arduinoFFT@^1.6.1
+```
+
+## Manual Installation (Advanced)
+
+If Library Manager fails, download from GitHub:
+
+1. **Adafruit MPU6050**
+   - URL: https://github.com/adafruit/Adafruit_MPU6050
+   - Download ZIP → Sketch → Include Library → Add .ZIP Library
+
+2. **DallasTemperature**
+   - URL: https://github.com/milesburton/Arduino-Temperature-Control-Library
+   - Download ZIP → Add .ZIP Library
+
+3. **OneWire**
+   - URL: https://github.com/PaulStoffregen/OneWire
+   - Download ZIP → Add .ZIP Library
+
+## Troubleshooting Library Issues
+
+### Issue: "MPU6050.h: No such file or directory"
+**Solution:** Install Adafruit MPU6050 library, not the "MPU6050" library by Electronic Cats
+
+### Issue: "Adafruit_Sensor.h not found"
+**Solution:** Install "Adafruit Unified Sensor" library separately
+
+### Issue: "DallasTemperature.h not found"
+**Solution:** Install both DallasTemperature AND OneWire libraries
+
+### Issue: "esp_task_wdt.h not found"
+**Solution:** Update ESP32 board support to version 2.0.0 or later
+
+### Issue: Compilation errors with ESP32 board
+**Solution:**
+- Update ESP32 core: Tools → Board → Board Manager → Update "esp32"
+- Try different ESP32 board version (2.0.11 recommended)
+- Check: https://github.com/espressif/arduino-esp32/issues
+
+## Library Versions Compatibility
+
+| Library | Minimum Version | Tested Version | Notes |
+|---------|----------------|----------------|-------|
+| ESP32 Core | 2.0.0 | 2.0.11 | Older versions may have WDT issues |
+| Adafruit MPU6050 | 2.0.0 | 2.2.4 | Requires Unified Sensor |
+| Adafruit Unified Sensor | 1.1.0 | 1.1.9 | Must match MPU6050 version |
+| DallasTemperature | 3.8.0 | 3.9.0 | Requires OneWire |
+| OneWire | 2.3.0 | 2.3.7 | Stable across versions |
+| arduinoFFT | 1.5.0 | 1.6.1 | Optional, not actively used |
+
+## Verification
+
+After installing all libraries, verify in Arduino IDE:
+- Sketch → Include Library → Should see all libraries listed
+- Tools → Board → ESP32 Arduino → ESP32 Dev Module (or similar)
+- Tools → Port → Select your ESP32 COM port
+
+Compile the sketch (Ctrl+R) to verify no errors.
+
+## Additional Resources
+
+- Arduino Library Documentation: https://www.arduino.cc/en/guide/libraries
+- ESP32 Arduino Core: https://github.com/espressif/arduino-esp32
+- Adafruit Learning System: https://learn.adafruit.com/
+- PlatformIO Library Registry: https://registry.platformio.org/
+
+## Support
+
+If you encounter library installation issues:
+1. Check Arduino IDE version (2.0+ recommended)
+2. Restart Arduino IDE after installation
+3. Clear Arduino cache: Close IDE, delete ~/.arduino15/cache (Linux/Mac) or AppData cache (Windows)
+4. Refer to README.md troubleshooting section
+5. Open GitHub issue with error details
+
+---
+
+**Last Updated:** 2025
+**Compatible with:** ESP32 Motor Protection System v3.2
